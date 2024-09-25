@@ -6,7 +6,7 @@ import axios from "axios";
 
 function BeerDetailsPage() {
   // Mock initial state, to be replaced by data from the Beers API. Store the beer info retrieved from the Beers API in this state variable.
-  const [beer, setBeer] = useState([]);
+  const [beer, setBeer] = useState(null);
 
   // React Router hook for navigation. We use it for the back button. You can leave this as it is.
   const navigate = useNavigate();
@@ -14,22 +14,20 @@ function BeerDetailsPage() {
   
   // TASKS:
   // 1. Get the beer ID from the URL, using the useParams hook.
-      const params = useParams()
-      console.log("params:", params)
+  const { beerId } = useParams()
 
   // 2. Set up an effect hook to make a request for the beer info from the Beers API.
-
-  useEffect(() =>{
-    axios.get(`${import.meta.env.VITE_SERVER_URL}/beers/${params.beerId}`)
-    .then(()=>{
-      
-
-    })
-    .catch ((err)=>{
-      console.log(err)
-    })
-
-  }, [])
+  useEffect(()=>{
+    const beerDetails = async () => {
+      try{
+        const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/beers/${beerId}`)
+        setBeer(response.data) // guarda la resposta a l'estat
+      }catch (error){
+        console.log(error)
+      }
+    }
+    beerDetails()
+  }, [beerId]) //useEffect es torna a executar quan canvia beerId, per tant torna a cridar a l'API i actualitza l'estat beer en funció de l'id de la url
 
   // 3. Use axios to make a HTTP request.
   // 4. Use the response data from the Beers API to update the state variable.

@@ -5,24 +5,21 @@ import beersJSON from "./../assets/beers.json";
 import axios from "axios";
 
 
-
+  // TASKS:
 function AllBeersPage() {
   // Mock initial state, to be replaced by data from the API. Once you retrieve the list of beers from the Beers API store it in this state variable.
   const [beers, setBeers] = useState([]);
 
-  useEffect(()=>{
-    getData()
+  useEffect(()=>{ // 1. Set up an effect hook to make a request to the Beers API and get a list with all the beers.
+     getData()
   }, [])
 
   const getData = async () =>{
-
     try{
 
-      const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/beers`)
+      const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/beers`) // 2. Use axios to make a HTTP request.
       console.log("response", response)
-      setBeers(response.data) // con esta función actualizamos el estado de beers, por lo que toda la data de la API va a el estado
-
-
+      setBeers(response.data)   // 3. Use the response data from the Beers API to update the state variable.
     }catch (error){
       console.log(error)
     }
@@ -30,14 +27,7 @@ function AllBeersPage() {
 
   }
 
-  // TASKS:
-  // 1. Set up an effect hook to make a request to the Beers API and get a list with all the beers.
-  // 2. Use axios to make a HTTP request.
-  // 3. Use the response data from the Beers API to update the state variable.
-
-
-
-  // The logic and the structure for the page showing the list of beers. You can leave this as it is for now.
+ // The logic and the structure for the page showing the list of beers. You can leave this as it is for now.
   return (
     <>
       <Search />
